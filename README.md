@@ -16,4 +16,4 @@ Il permet :
 - Laravel
 - PHP
 - MySQL
-- HTML/CSS
+- HTML/CSS/js
