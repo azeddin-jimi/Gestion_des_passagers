@@ -1,2 +1,19 @@
-# Gestion_des_passagers
-Application web de réservation de transport interurbain avec Laravel, basée sur l’architecture MVC et une base MySQL.   Elle permet la gestion des trajets et réservations (CRUD) pour les passagers, avec authentification, validation des données et protection contre SQL injection et XSS.
+# Gestion des passagers
+
+Application web de réservation de transport interurbain avec Laravel.
+
+## Description
+Ce projet est basé sur l’architecture MVC avec une base de données MySQL.
+
+Il permet :
+- Gestion des trajets
+- Gestion des réservations (CRUD)
+- Authentification des utilisateurs
+- Validation des données
+- Protection contre SQL Injection et XSS
+
+## Technologies utilisées
+- Laravel
+- PHP
+- MySQL
+- HTML/CSS
