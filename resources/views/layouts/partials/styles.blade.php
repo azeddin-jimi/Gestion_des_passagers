@@ -1,0 +1,32 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+    :root {
+        --markoub-teal: #0d9488;
+        --markoub-teal-dark: #0f766e;
+        --markoub-ink: #134e4a;
+    }
+    .navbar-markoub {
+        background: linear-gradient(90deg, var(--markoub-teal-dark), var(--markoub-teal)) !important;
+    }
+    .hero-markoub {
+        background: linear-gradient(135deg, var(--markoub-ink) 0%, var(--markoub-teal-dark) 45%, #115e59 100%);
+        color: #ecfeff;
+    }
+    .btn-markoub {
+        --bs-btn-color: #fff;
+        --bs-btn-bg: var(--markoub-teal);
+        --bs-btn-border-color: var(--markoub-teal);
+        --bs-btn-hover-bg: var(--markoub-teal-dark);
+        --bs-btn-hover-border-color: var(--markoub-teal-dark);
+        --bs-btn-active-bg: var(--markoub-ink);
+        --bs-btn-active-border-color: var(--markoub-ink);
+    }
+    .text-markoub { color: var(--markoub-teal-dark) !important; }
+    .border-markoub { border-color: var(--markoub-teal) !important; }
+    .card-hover:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 .5rem 1rem rgba(13, 148, 136, .12) !important;
+    }
+    .transition-card { transition: transform .2s ease, box-shadow .2s ease; }
+</style>

@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\SearchTrajetsRequest;
+use App\Models\Trajet;
+use Illuminate\View\View;
+
+class TrajetSearchController extends Controller
+{
+    public function index(SearchTrajetsRequest $request): View
+    {
+        $data = $request->validated();
+
+        $trajets = Trajet::query()
+            ->where('departure_city', $data['departure_city'])
+            ->where('arrival_city', $data['arrival_city'])
+            ->whereDate('date', $data['date'])
+            ->where('seats_available', '>', 0)
+            ->orderBy('time')
+            ->paginate(12)
+            ->withQueryString();
+
+        return view('trajets.search-results', [
+            'trajets' => $trajets,
+            'departure_city' => $data['departure_city'],
+            'arrival_city' => $data['arrival_city'],
+            'date' => $data['date'],
+        ]);
+    }
+}
