@@ -8,18 +8,46 @@ use App\Http\Requests\Admin\UpdateTrajetRequest;
 use App\Models\Trajet;
 use App\Support\MoroccanCities;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Throwable;
 
 class TrajetController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $trajets = Trajet::query()
-            ->orderByDesc('date')
+        $query = Trajet::query();
+
+        // Search filters
+        if ($request->filled('departure_city')) {
+            $query->where('departure_city', 'like', '%' . $request->departure_city . '%');
+        }
+
+        if ($request->filled('arrival_city')) {
+            $query->where('arrival_city', 'like', '%' . $request->arrival_city . '%');
+        }
+
+        // Status filters
+        if ($request->filled('status')) {
+            switch ($request->status) {
+                case 'available':
+                    $query->where('seats_available', '>', 0)
+                        ->whereDate('date', '>=', now()->toDateString());
+                    break;
+                case 'full':
+                    $query->where('seats_available', '=', 0);
+                    break;
+                case 'recent':
+                    $query->whereDate('date', '>=', now()->subDays(7)->toDateString());
+                    break;
+            }
+        }
+
+        $trajets = $query->orderByDesc('date')
             ->orderBy('time')
-            ->paginate(15);
+            ->paginate(15)
+            ->withQueryString();
 
         return view('admin.trajets.index', compact('trajets'));
     }

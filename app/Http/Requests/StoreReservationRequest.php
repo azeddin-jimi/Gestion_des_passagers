@@ -23,7 +23,7 @@ class StoreReservationRequest extends FormRequest
             'country_code' => ['required', 'string', 'max:8'],
             'whatsapp' => ['required', 'string', 'max:30', 'regex:/^[0-9\s\-]{6,20}$/'],
             'seats_reserved' => ['required', 'integer', 'min:1'],
-            'payment_method' => ['required', 'string', 'max:80'],
+            'payment_method' => ['nullable', 'string', 'max:80'],
             'discount_code' => ['nullable', 'string', 'max:50'],
             'terms_accepted' => ['accepted'],
             'newsletter_opt_in' => ['nullable', 'boolean'],
@@ -34,11 +34,11 @@ class StoreReservationRequest extends FormRequest
     {
         $validator->after(function ($validator): void {
             $trajet = $this->route('trajet');
-            if (! $trajet instanceof Trajet) {
+            if (!$trajet instanceof Trajet) {
                 return;
             }
 
-            if (! $trajet->isBookable()) {
+            if (!$trajet->isBookable()) {
                 $validator->errors()->add('trajet', __('Ce trajet n\'est plus disponible à la réservation.'));
 
                 return;

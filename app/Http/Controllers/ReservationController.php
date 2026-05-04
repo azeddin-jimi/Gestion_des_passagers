@@ -29,7 +29,7 @@ class ReservationController extends Controller
 
     public function create(Trajet $trajet): View|RedirectResponse
     {
-        if (! $trajet->isBookable()) {
+        if (!$trajet->isBookable()) {
             return redirect()
                 ->route('home')
                 ->with('error', __('Ce trajet n\'est plus disponible.'));
@@ -42,7 +42,7 @@ class ReservationController extends Controller
 
     public function store(StoreReservationRequest $request, Trajet $trajet): RedirectResponse
     {
-        if (! $trajet->isBookable()) {
+        if (!$trajet->isBookable()) {
             return redirect()
                 ->route('home')
                 ->with('error', __('Ce trajet n\'est plus disponible.'));
@@ -61,15 +61,15 @@ class ReservationController extends Controller
 
                 $locked->decrement('seats_available', $validated['seats_reserved']);
 
-                $fullName = trim($validated['first_name'].' '.$validated['last_name']);
+                $fullName = trim($validated['first_name'] . ' ' . $validated['last_name']);
 
                 return Reservation::query()->create([
                     'user_id' => $request->user()->id,
                     'trajet_id' => $locked->id,
                     'name' => $fullName,
-                    'phone' => trim($validated['country_code'].' '.$validated['whatsapp']),
+                    'phone' => trim($validated['country_code'] . ' ' . $validated['whatsapp']),
                     'seats_reserved' => $validated['seats_reserved'],
-                    'payment_method' => $validated['payment_method'],
+                    'payment_method' => $validated['payment_method'] ?? null,
                     'discount_code' => $validated['discount_code'] ?? null,
                     'newsletter_opt_in' => (bool) ($validated['newsletter_opt_in'] ?? false),
                     'terms_accepted' => true,
@@ -93,13 +93,13 @@ class ReservationController extends Controller
             try {
                 Mail::to($request->user()->email)->send(new ReservationConfirmationMail($reservation->load('trajet')));
             } catch (Throwable $e) {
-                Log::warning('Reservation confirmation mail failed: '.$e->getMessage(), ['exception' => $e]);
+                Log::warning('Reservation confirmation mail failed: ' . $e->getMessage(), ['exception' => $e]);
             }
         }
 
         return redirect()
-            ->route('reservations.success', $reservation)
-            ->with('success', __('Paiement confirme. Reservation enregistree avec succes.'));
+            ->route('payments.show', $reservation)
+            ->with('success', __('Reservation creee. Veuillez proceder au paiement.'));
     }
 
     public function success(Reservation $reservation): View

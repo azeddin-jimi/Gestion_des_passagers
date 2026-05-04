@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ReservationController as AdminReservationControll
 use App\Http\Controllers\Admin\TrajetController as AdminTrajetController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\TrajetAvailabilityController;
@@ -23,6 +24,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/trajets/{trajet}/reserver', [ReservationController::class, 'create'])->name('reservations.create');
     Route::post('/trajets/{trajet}/reservations', [ReservationController::class, 'store'])->name('reservations.store');
     Route::get('/reservations/{reservation}/confirmation', [ReservationController::class, 'success'])->name('reservations.success');
+
+    // Payment routes
+    Route::get('/reservations/{reservation}/payment', [PaymentController::class, 'show'])->name('payments.show');
+    Route::post('/reservations/{reservation}/payment', [PaymentController::class, 'process'])->name('payments.process');
+    Route::get('/payments/{payment}/success', [PaymentController::class, 'success'])->name('payments.success');
+    Route::get('/payments/{payment}/failed', [PaymentController::class, 'failed'])->name('payments.failed');
 });
 
 Route::middleware('auth')->group(function () {
