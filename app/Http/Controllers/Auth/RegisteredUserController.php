@@ -31,14 +31,28 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['nullable', 'string', 'max:120'],
+            'last_name' => ['nullable', 'string', 'max:120'],
+            'name' => ['nullable', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'whatsapp' => ['nullable', 'string', 'max:30'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $fullName = trim(
+            implode(' ', array_filter([
+                $request->string('first_name')->toString(),
+                $request->string('last_name')->toString(),
+            ]))
+        );
+        $fullName = $fullName !== '' ? $fullName : $request->string('name')->toString();
+
         $user = User::create([
-            'name' => $request->name,
+            'first_name' => $request->string('first_name')->toString() ?: null,
+            'last_name' => $request->string('last_name')->toString() ?: null,
+            'name' => $fullName,
             'email' => $request->email,
+            'whatsapp' => $request->string('whatsapp')->toString() ?: null,
             'password' => Hash::make($request->password),
             'role' => User::ROLE_USER,
         ]);

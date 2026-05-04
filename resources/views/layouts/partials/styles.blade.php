@@ -14,6 +14,9 @@
         background: linear-gradient(135deg, var(--markoub-ink) 0%, var(--markoub-teal-dark) 45%, #115e59 100%);
         color: #ecfeff;
     }
+    body {
+        background: linear-gradient(180deg, #f0fdfa 0%, #f8fafc 45%, #f8fafc 100%);
+    }
     .btn-markoub {
         --bs-btn-color: #fff;
         --bs-btn-bg: var(--markoub-teal);
@@ -43,6 +46,31 @@
     }
     .fade-in-up {
         animation: fadeInUp .7s ease both;
+    }
+    .footer-markoub {
+        background: #0f172a;
+        color: #cbd5e1;
+    }
+    .footer-markoub a {
+        color: #cbd5e1;
+        text-decoration: none;
+    }
+    .footer-markoub a:hover { color: #fff; }
+    .payment-badge {
+        border: 1px solid rgba(255, 255, 255, .18);
+        border-radius: .6rem;
+        padding: .35rem .65rem;
+        display: inline-flex;
+        align-items: center;
+        gap: .35rem;
+        background: rgba(255, 255, 255, .05);
+        font-size: .8rem;
+    }
+    .trip-modal-img {
+        height: 200px;
+        object-fit: cover;
+        border-radius: .9rem;
+        width: 100%;
     }
     @keyframes fadeInUp {
         from {

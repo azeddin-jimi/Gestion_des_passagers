@@ -22,6 +22,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/mes-reservations', [ReservationController::class, 'index'])->name('reservations.mine');
     Route::get('/trajets/{trajet}/reserver', [ReservationController::class, 'create'])->name('reservations.create');
     Route::post('/trajets/{trajet}/reservations', [ReservationController::class, 'store'])->name('reservations.store');
+    Route::get('/reservations/{reservation}/confirmation', [ReservationController::class, 'success'])->name('reservations.success');
 });
 
 Route::middleware('auth')->group(function () {

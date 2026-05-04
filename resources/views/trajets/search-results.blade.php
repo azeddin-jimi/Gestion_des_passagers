@@ -56,6 +56,7 @@
                                 <td class="text-end">
                                     @auth
                                         @if (auth()->user()->hasVerifiedEmail() && $trajet->isBookable())
+                                            <button class="btn btn-sm btn-outline-secondary me-1" data-bs-toggle="modal" data-bs-target="#tripModal{{ $trajet->id }}">{{ __('Détails') }}</button>
                                             <a href="{{ route('reservations.create', $trajet) }}" class="btn btn-sm btn-markoub">{{ __('Réserver') }}</a>
                                         @elseif (! auth()->user()->hasVerifiedEmail())
                                             <a href="{{ route('verification.notice') }}" class="btn btn-sm btn-outline-secondary">{{ __('Vérifier e-mail') }}</a>
@@ -85,4 +86,42 @@
             </div>
         @endif
     </div>
+
+    @foreach ($trajets as $trajet)
+        <div class="modal fade" id="tripModal{{ $trajet->id }}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content border-0 shadow">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{ __('Jaouharat Agadir') }} - {{ __('En Route') }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ __('Fermer') }}"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img class="trip-modal-img mb-3" src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80" alt="Bus">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <strong>{{ $trajet->departure_city }}</strong>
+                                <div class="text-muted">{{ \Illuminate\Support\Str::substr($trajet->time, 0, 5) }}</div>
+                                <button class="btn btn-sm btn-outline-primary mt-2">{{ __('Carte') }}</button>
+                            </div>
+                            <div class="text-center text-muted">{{ __('~ 6h 15m') }}</div>
+                            <div class="text-end">
+                                <strong>{{ $trajet->arrival_city }}</strong>
+                                <div class="text-muted">{{ \Carbon\Carbon::parse($trajet->time)->addHours(6)->format('H:i') }}</div>
+                                <button class="btn btn-sm btn-outline-primary mt-2">{{ __('Carte') }}</button>
+                            </div>
+                        </div>
+                        <p class="small text-muted mb-3">{{ __('Arrêt intermédiaire: Gare Routière de Settat') }}</p>
+                        <div class="d-flex flex-wrap gap-2 mb-2">
+                            @foreach (['Climatisation', 'Lumière', 'Chargeur', 'Wifi', 'Boîte À Pharmacie', 'Auto-Route'] as $amenity)
+                                <span class="badge rounded-pill text-bg-light border">{{ $amenity }}</span>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="{{ route('reservations.create', $trajet) }}" class="btn btn-markoub w-100 btn-animated">{{ __('Continuer') }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection

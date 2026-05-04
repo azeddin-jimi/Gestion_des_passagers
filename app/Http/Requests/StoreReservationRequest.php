@@ -18,9 +18,15 @@ class StoreReservationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'max:50', 'regex:/^[0-9+\s\-]{8,20}$/'],
+            'first_name' => ['required', 'string', 'max:120'],
+            'last_name' => ['required', 'string', 'max:120'],
+            'country_code' => ['required', 'string', 'max:8'],
+            'whatsapp' => ['required', 'string', 'max:30', 'regex:/^[0-9\s\-]{6,20}$/'],
             'seats_reserved' => ['required', 'integer', 'min:1'],
+            'payment_method' => ['required', 'string', 'max:80'],
+            'discount_code' => ['nullable', 'string', 'max:50'],
+            'terms_accepted' => ['accepted'],
+            'newsletter_opt_in' => ['nullable', 'boolean'],
         ];
     }
 

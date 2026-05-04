@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreReservationRequest;
+use App\Mail\ReservationConfirmationMail;
 use App\Models\Reservation;
 use App\Models\Trajet;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 use RuntimeException;
 use Throwable;
@@ -47,9 +49,10 @@ class ReservationController extends Controller
         }
 
         $validated = $request->validated();
+        $reservation = null;
 
         try {
-            DB::transaction(function () use ($validated, $trajet, $request): void {
+            $reservation = DB::transaction(function () use ($validated, $trajet, $request): Reservation {
                 $locked = Trajet::query()->whereKey($trajet->getKey())->lockForUpdate()->firstOrFail();
 
                 if ($locked->seats_available < $validated['seats_reserved']) {
@@ -58,12 +61,18 @@ class ReservationController extends Controller
 
                 $locked->decrement('seats_available', $validated['seats_reserved']);
 
-                Reservation::query()->create([
+                $fullName = trim($validated['first_name'].' '.$validated['last_name']);
+
+                return Reservation::query()->create([
                     'user_id' => $request->user()->id,
                     'trajet_id' => $locked->id,
-                    'name' => $validated['name'],
-                    'phone' => $validated['phone'],
+                    'name' => $fullName,
+                    'phone' => trim($validated['country_code'].' '.$validated['whatsapp']),
                     'seats_reserved' => $validated['seats_reserved'],
+                    'payment_method' => $validated['payment_method'],
+                    'discount_code' => $validated['discount_code'] ?? null,
+                    'newsletter_opt_in' => (bool) ($validated['newsletter_opt_in'] ?? false),
+                    'terms_accepted' => true,
                 ]);
             });
         } catch (Throwable $e) {
@@ -80,8 +89,25 @@ class ReservationController extends Controller
                 ->with('error', __('Une erreur est survenue lors de la réservation.'));
         }
 
+        if ($reservation) {
+            try {
+                Mail::to($request->user()->email)->send(new ReservationConfirmationMail($reservation->load('trajet')));
+            } catch (Throwable $e) {
+                Log::warning('Reservation confirmation mail failed: '.$e->getMessage(), ['exception' => $e]);
+            }
+        }
+
         return redirect()
-            ->route('reservations.mine')
-            ->with('success', __('Votre réservation a été enregistrée avec succès.'));
+            ->route('reservations.success', $reservation)
+            ->with('success', __('Paiement confirme. Reservation enregistree avec succes.'));
+    }
+
+    public function success(Reservation $reservation): View
+    {
+        abort_if($reservation->user_id !== auth()->id(), 403);
+
+        return view('reservations.success', [
+            'reservation' => $reservation->load('trajet'),
+        ]);
     }
 }

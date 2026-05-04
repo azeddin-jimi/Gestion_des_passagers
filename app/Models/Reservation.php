@@ -16,6 +16,10 @@ class Reservation extends Model
         'name',
         'phone',
         'seats_reserved',
+        'payment_method',
+        'discount_code',
+        'newsletter_opt_in',
+        'terms_accepted',
     ];
 
     /**
@@ -25,6 +29,8 @@ class Reservation extends Model
     {
         return [
             'seats_reserved' => 'integer',
+            'newsletter_opt_in' => 'boolean',
+            'terms_accepted' => 'boolean',
         ];
     }
 

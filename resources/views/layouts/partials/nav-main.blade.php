@@ -35,12 +35,21 @@
                 @endauth
             </ul>
             <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown me-2">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-globe2 me-1"></i>{{ __('Langue') }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><span class="me-2">🇲🇦</span>Darija</a></li>
+                        <li><a class="dropdown-item" href="#"><span class="me-2">🇫🇷</span>Français</a></li>
+                        <li><a class="dropdown-item" href="#"><span class="me-2">🇺🇸</span>English</a></li>
+                    </ul>
+                </li>
                 @guest
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">{{ __('Connexion') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">{{ __('Inscription') }}</a>
+                        <button class="btn btn-light btn-sm fw-semibold mt-1 btn-animated" data-bs-toggle="modal" data-bs-target="#authModal">
+                            {{ __('Se connecter / S\'inscrire') }}
+                        </button>
                     </li>
                 @else
                     <li class="nav-item dropdown">
