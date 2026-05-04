@@ -25,7 +25,6 @@ class SearchTrajetsRequest extends FormRequest
         return [
             'departure_city' => ['required', 'string', 'max:120', Rule::in($cities)],
             'arrival_city' => ['required', 'string', 'max:120', Rule::in($cities)],
-            'date' => ['nullable', 'date', 'after_or_equal:today'],
         ];
     }
 

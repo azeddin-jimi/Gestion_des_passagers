@@ -12,18 +12,12 @@ class TrajetSearchController extends Controller
     {
         $data = $request->validated();
 
-        $trajetsQuery = Trajet::query()
+        $trajets = Trajet::query()
             ->fromCity($data['departure_city'])
             ->toCity($data['arrival_city'])
             ->where('seats_available', '>', 0)
             ->orderBy('date')
-            ->orderBy('time');
-
-        if (! empty($data['date'])) {
-            $trajetsQuery->whereDate('date', $data['date']);
-        }
-
-        $trajets = $trajetsQuery
+            ->orderBy('time')
             ->paginate(12)
             ->withQueryString();
 
@@ -31,7 +25,6 @@ class TrajetSearchController extends Controller
             'trajets' => $trajets,
             'departure_city' => $data['departure_city'],
             'arrival_city' => $data['arrival_city'],
-            'date' => $data['date'] ?? null,
         ]);
     }
 }

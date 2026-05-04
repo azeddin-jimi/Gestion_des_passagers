@@ -1,6 +1,6 @@
 @extends('layouts.markoub')
 
-@section('title', __('Résultats').' — '.config('app.name'))
+@section('title', __('Résultats') . ' — ' . config('app.name'))
 
 @section('content')
     <nav aria-label="breadcrumb" class="mb-3" data-aos="fade-right">
@@ -10,16 +10,14 @@
         </ol>
     </nav>
 
-    <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-lg-between gap-3 mb-4" data-aos="fade-up">
+    <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-lg-between gap-3 mb-4"
+        data-aos="fade-up">
         <div>
             <h1 class="h3 mb-1 text-secondary">{{ __('Trajets disponibles') }}</h1>
             <p class="text-muted mb-0">
                 <strong>{{ $departure_city }}</strong>
                 <i class="bi bi-arrow-right mx-1"></i>
                 <strong>{{ $arrival_city }}</strong>
-                @if ($date)
-                    · {{ \Carbon\Carbon::parse($date)->translatedFormat('l d F Y') }}
-                @endif
             </p>
         </div>
         <a href="{{ route('home') }}" class="btn btn-outline-secondary btn-sm align-self-start">
@@ -51,20 +49,22 @@
                                 <td>{{ \Illuminate\Support\Str::substr($trajet->time, 0, 5) }}</td>
                                 <td>{{ number_format($trajet->price, 2, ',', ' ') }} MAD</td>
                                 <td>
-                                    <span class="badge bg-success-subtle text-success border border-success-subtle">{{ $trajet->seats_available }}</span>
+                                    <span
+                                        class="badge bg-success-subtle text-success border border-success-subtle">{{ $trajet->seats_available }}</span>
                                 </td>
                                 <td class="text-end">
                                     @auth
-                                        @if (auth()->user()->hasVerifiedEmail() && $trajet->isBookable())
-                                            <button class="btn btn-sm btn-outline-secondary me-1" data-bs-toggle="modal" data-bs-target="#tripModal{{ $trajet->id }}">{{ __('Détails') }}</button>
-                                            <a href="{{ route('reservations.create', $trajet) }}" class="btn btn-sm btn-markoub">{{ __('Réserver') }}</a>
-                                        @elseif (! auth()->user()->hasVerifiedEmail())
-                                            <a href="{{ route('verification.notice') }}" class="btn btn-sm btn-outline-secondary">{{ __('Vérifier e-mail') }}</a>
+                                        @if ($trajet->isBookable())
+                                            <button class="btn btn-sm btn-outline-secondary me-1" data-bs-toggle="modal"
+                                                data-bs-target="#tripModal{{ $trajet->id }}">{{ __('Détails') }}</button>
+                                            <a href="{{ route('reservations.create', $trajet) }}"
+                                                class="btn btn-sm btn-markoub">{{ __('Réserver') }}</a>
                                         @else
                                             <span class="text-muted small">{{ __('Complet') }}</span>
                                         @endif
                                     @else
-                                        <a href="{{ route('login') }}" class="btn btn-sm btn-outline-primary">{{ __('Connexion') }}</a>
+                                        <a href="{{ route('login') }}"
+                                            class="btn btn-sm btn-outline-primary">{{ __('Connexion') }}</a>
                                     @endauth
                                 </td>
                             </tr>
@@ -91,34 +91,57 @@
         <div class="modal fade" id="tripModal{{ $trajet->id }}" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content border-0 shadow">
-                    <div class="modal-header">
-                        <h5 class="modal-title">{{ __('Jaouharat Agadir') }} - {{ __('En Route') }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ __('Fermer') }}"></button>
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title fw-bold">{{ $trajet->departure_city }} → {{ $trajet->arrival_city }}</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="{{ __('Fermer') }}"></button>
                     </div>
-                    <div class="modal-body">
-                        <img class="trip-modal-img mb-3" src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80" alt="Bus">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div>
-                                <strong>{{ $trajet->departure_city }}</strong>
-                                <div class="text-muted">{{ \Illuminate\Support\Str::substr($trajet->time, 0, 5) }}</div>
-                                <button class="btn btn-sm btn-outline-primary mt-2">{{ __('Carte') }}</button>
+                    <div class="modal-body p-4">
+                        <div class="text-center mb-4">
+                            <img class="img-fluid rounded shadow"
+                                src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80"
+                                alt="Bus" style="max-height: 200px;">
+                        </div>
+                        <div class="row g-3 mb-4">
+                            <div class="col-5 text-center">
+                                <div class="fw-bold text-primary">{{ $trajet->departure_city }}</div>
+                                <div class="text-muted small">{{ \Illuminate\Support\Str::substr($trajet->time, 0, 5) }}</div>
                             </div>
-                            <div class="text-center text-muted">{{ __('~ 6h 15m') }}</div>
-                            <div class="text-end">
-                                <strong>{{ $trajet->arrival_city }}</strong>
-                                <div class="text-muted">{{ \Carbon\Carbon::parse($trajet->time)->addHours(6)->format('H:i') }}</div>
-                                <button class="btn btn-sm btn-outline-primary mt-2">{{ __('Carte') }}</button>
+                            <div class="col-2 text-center">
+                                <i class="bi bi-arrow-right fs-4 text-muted"></i>
+                                <div class="text-muted small mt-1">~6h</div>
+                            </div>
+                            <div class="col-5 text-center">
+                                <div class="fw-bold text-primary">{{ $trajet->arrival_city }}</div>
+                                <div class="text-muted small">
+                                    {{ \Carbon\Carbon::parse($trajet->time)->addHours(6)->format('H:i') }}</div>
                             </div>
                         </div>
-                        <p class="small text-muted mb-3">{{ __('Arrêt intermédiaire: Gare Routière de Settat') }}</p>
-                        <div class="d-flex flex-wrap gap-2 mb-2">
-                            @foreach (['Climatisation', 'Lumière', 'Chargeur', 'Wifi', 'Boîte À Pharmacie', 'Auto-Route'] as $amenity)
-                                <span class="badge rounded-pill text-bg-light border">{{ $amenity }}</span>
-                            @endforeach
+                        <div class="mb-4">
+                            <h6 class="fw-semibold mb-3">{{ __('Équipements') }}</h6>
+                            <div class="row g-2">
+                                <div class="col-6 col-md-3 text-center">
+                                    <i class="bi bi-wifi fs-3 text-primary mb-1"></i>
+                                    <div class="small">WiFi</div>
+                                </div>
+                                <div class="col-6 col-md-3 text-center">
+                                    <i class="bi bi-snow fs-3 text-primary mb-1"></i>
+                                    <div class="small">Climatisation</div>
+                                </div>
+                                <div class="col-6 col-md-3 text-center">
+                                    <i class="bi bi-lightning-charge fs-3 text-primary mb-1"></i>
+                                    <div class="small">Chargeur</div>
+                                </div>
+                                <div class="col-6 col-md-3 text-center">
+                                    <i class="bi bi-tv fs-3 text-primary mb-1"></i>
+                                    <div class="small">Écran</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <a href="{{ route('reservations.create', $trajet) }}" class="btn btn-markoub w-100 btn-animated">{{ __('Continuer') }}</a>
+                    <div class="modal-footer border-0 bg-light">
+                        <a href="{{ route('reservations.create', $trajet) }}"
+                            class="btn btn-primary btn-lg w-100 fw-bold">{{ __('CONTINUER') }}</a>
                     </div>
                 </div>
             </div>

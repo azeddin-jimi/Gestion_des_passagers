@@ -18,7 +18,7 @@ Route::get('/recherche', [TrajetSearchController::class, 'index'])->name('trajet
 Route::get('/trajets/{trajet}/disponibilite', TrajetAvailabilityController::class)
     ->name('trajets.availability');
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/mes-reservations', [ReservationController::class, 'index'])->name('reservations.mine');
     Route::get('/trajets/{trajet}/reserver', [ReservationController::class, 'create'])->name('reservations.create');
     Route::post('/trajets/{trajet}/reservations', [ReservationController::class, 'store'])->name('reservations.store');
@@ -31,11 +31,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', AdminDashboardController::class)->name('dashboard');
     Route::get('users', [AdminUserController::class, 'index'])->name('users.index');
     Route::resource('trajets', AdminTrajetController::class)->except(['show']);
     Route::get('reservations', [AdminReservationController::class, 'index'])->name('reservations.index');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

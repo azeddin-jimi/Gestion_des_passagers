@@ -77,11 +77,6 @@
                             @endforeach
                         </div>
                         @error('payment_method')<div class="text-danger small mt-2">{{ $message }}</div>@enderror
-                        <div class="mt-3">
-                            <label class="form-label">{{ __('Code de réduction') }}</label>
-                            <input type="text" name="discount_code" class="form-control @error('discount_code') is-invalid @enderror" value="{{ old('discount_code') }}" placeholder="PROMO2026">
-                            @error('discount_code')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                        </div>
                     </div>
                 </div>
 
@@ -121,7 +116,11 @@
                     <p class="small text-muted mb-1">{{ $trajet->date->format('d/m/Y') }} {{ \Illuminate\Support\Str::substr($trajet->time, 0, 5) }}</p>
                     <p class="small text-muted">{{ __('Voyageurs') }}: <span id="summarySeats">{{ $initialSeats }}</span></p>
 
-                    <p class="small text-muted mb-3">{{ __('Le code de réduction peut être saisi dans le formulaire de paiement.') }}</p>
+                    <div class="mb-3">
+                        <label class="form-label small">{{ __('Code de réduction') }}</label>
+                        <input type="text" name="discount_code" class="form-control form-control-sm @error('discount_code') is-invalid @enderror" value="{{ old('discount_code') }}" placeholder="PROMO2026">
+                        @error('discount_code')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
 
                     <div class="small d-grid gap-2">
                         <div class="d-flex justify-content-between">
