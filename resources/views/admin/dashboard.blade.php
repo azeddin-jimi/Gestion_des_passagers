@@ -18,6 +18,17 @@
         <div class="col-md-6 col-xl-4">
             <div class="card border-0 shadow-sm h-100">
                 <div class="card-body d-flex align-items-center gap-3">
+                    <div class="rounded-3 bg-warning-subtle text-warning p-3"><i class="bi bi-people fs-3"></i></div>
+                    <div>
+                        <p class="text-muted small mb-0">{{ __('Utilisateurs') }}</p>
+                        <p class="h3 mb-0 fw-bold">{{ $usersCount }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body d-flex align-items-center gap-3">
                     <div class="rounded-3 bg-primary-subtle text-primary p-3"><i class="bi bi-map fs-3"></i></div>
                     <div>
                         <p class="text-muted small mb-0">{{ __('Trajets') }}</p>
@@ -36,6 +47,15 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-header bg-white py-3">
+            <h2 class="h5 mb-0">{{ __('Réservations par ligne') }}</h2>
+        </div>
+        <div class="card-body">
+            <canvas id="reservationsByRouteChart" height="90"></canvas>
         </div>
     </div>
 
@@ -81,3 +101,49 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script>
+        (() => {
+            const el = document.getElementById('reservationsByRouteChart');
+            if (!el) {
+                return;
+            }
+
+            const labels = @json($reservationsByRoute->map(fn ($item) => $item->departure_city.' → '.$item->arrival_city)->values());
+            const data = @json($reservationsByRoute->pluck('total')->values());
+
+            new Chart(el, {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: '{{ __('Nombre de réservations') }}',
+                        data,
+                        borderWidth: 1,
+                        borderRadius: 8,
+                        backgroundColor: 'rgba(13, 148, 136, 0.7)',
+                        borderColor: 'rgba(13, 148, 136, 1)',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                precision: 0
+                            }
+                        }
+                    }
+                }
+            });
+        })();
+    </script>
+@endpush

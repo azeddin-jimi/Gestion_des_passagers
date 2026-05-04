@@ -3,21 +3,23 @@
 @section('title', __('Résultats').' — '.config('app.name'))
 
 @section('content')
-    <nav aria-label="breadcrumb" class="mb-3">
+    <nav aria-label="breadcrumb" class="mb-3" data-aos="fade-right">
         <ol class="breadcrumb small mb-0">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('Accueil') }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ __('Résultats') }}</li>
         </ol>
     </nav>
 
-    <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-lg-between gap-3 mb-4">
+    <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-lg-between gap-3 mb-4" data-aos="fade-up">
         <div>
             <h1 class="h3 mb-1 text-secondary">{{ __('Trajets disponibles') }}</h1>
             <p class="text-muted mb-0">
                 <strong>{{ $departure_city }}</strong>
                 <i class="bi bi-arrow-right mx-1"></i>
                 <strong>{{ $arrival_city }}</strong>
-                · {{ \Carbon\Carbon::parse($date)->translatedFormat('l d F Y') }}
+                @if ($date)
+                    · {{ \Carbon\Carbon::parse($date)->translatedFormat('l d F Y') }}
+                @endif
             </p>
         </div>
         <a href="{{ route('home') }}" class="btn btn-outline-secondary btn-sm align-self-start">
@@ -25,7 +27,7 @@
         </a>
     </div>
 
-    <div class="card border-0 shadow-sm">
+    <div class="card border-0 shadow-sm" data-aos="fade-up" data-aos-delay="80">
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
@@ -69,7 +71,7 @@
                             <tr>
                                 <td colspan="7" class="text-center text-muted py-5">
                                     <i class="bi bi-inbox fs-1 d-block mb-2"></i>
-                                    {{ __('Aucun trajet ne correspond à votre recherche pour cette date.') }}
+                                    {{ __('Aucun trajet ne correspond à votre recherche.') }}
                                 </td>
                             </tr>
                         @endforelse

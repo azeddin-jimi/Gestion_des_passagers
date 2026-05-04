@@ -24,6 +24,9 @@
                     <a class="nav-link rounded {{ request()->routeIs('admin.trajets.*') ? 'active bg-primary text-white' : 'text-dark' }}" href="{{ route('admin.trajets.index') }}">
                         <i class="bi bi-map me-2"></i>{{ __('Trajets') }}
                     </a>
+                    <a class="nav-link rounded {{ request()->routeIs('admin.users.*') ? 'active bg-primary text-white' : 'text-dark' }}" href="{{ route('admin.users.index') }}">
+                        <i class="bi bi-people me-2"></i>{{ __('Utilisateurs') }}
+                    </a>
                     <a class="nav-link rounded {{ request()->routeIs('admin.reservations.*') ? 'active bg-primary text-white' : 'text-dark' }}" href="{{ route('admin.reservations.index') }}">
                         <i class="bi bi-ticket-perforated me-2"></i>{{ __('Réservations') }}
                     </a>

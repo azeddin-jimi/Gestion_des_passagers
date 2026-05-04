@@ -5,6 +5,7 @@ namespace App\Models;
 use Database\Factories\TrajetFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Trajet extends Model
@@ -46,6 +47,16 @@ class Trajet extends Model
     public function seatsBooked(): int
     {
         return (int) $this->reservations()->sum('seats_reserved');
+    }
+
+    public function scopeFromCity(Builder $query, string $departureCity): Builder
+    {
+        return $query->where('departure_city', $departureCity);
+    }
+
+    public function scopeToCity(Builder $query, string $arrivalCity): Builder
+    {
+        return $query->where('arrival_city', $arrivalCity);
     }
 
     public function isBookable(): bool

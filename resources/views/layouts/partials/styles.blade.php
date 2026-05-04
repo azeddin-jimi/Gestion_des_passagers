@@ -1,5 +1,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
 <style>
     :root {
         --markoub-teal: #0d9488;
@@ -25,8 +26,32 @@
     .text-markoub { color: var(--markoub-teal-dark) !important; }
     .border-markoub { border-color: var(--markoub-teal) !important; }
     .card-hover:hover {
-        transform: translateY(-2px);
+        transform: translateY(-6px);
         box-shadow: 0 .5rem 1rem rgba(13, 148, 136, .12) !important;
     }
-    .transition-card { transition: transform .2s ease, box-shadow .2s ease; }
+    .transition-card { transition: transform .25s ease, box-shadow .25s ease; }
+    .hero-search-card {
+        border-radius: 1rem;
+        overflow: hidden;
+    }
+    .btn-animated {
+        transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .btn-animated:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 .5rem 1rem rgba(13, 148, 136, .2);
+    }
+    .fade-in-up {
+        animation: fadeInUp .7s ease both;
+    }
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translate3d(0, 20px, 0);
+        }
+        to {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+    }
 </style>

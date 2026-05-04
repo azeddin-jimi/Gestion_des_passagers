@@ -25,7 +25,28 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.3/dist/cdn.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.AOS) {
+                window.AOS.init({ duration: 650, once: true, easing: 'ease-out' });
+            }
+
+            document.querySelectorAll('form[data-loading]').forEach((form) => {
+                form.addEventListener('submit', () => {
+                    const button = form.querySelector('[type="submit"]');
+                    const spinner = form.querySelector('[data-spinner]');
+                    if (button) {
+                        button.setAttribute('disabled', 'disabled');
+                    }
+                    if (spinner) {
+                        spinner.classList.remove('d-none');
+                    }
+                });
+            });
+        });
+    </script>
     @stack('scripts')
 </body>
 </html>
