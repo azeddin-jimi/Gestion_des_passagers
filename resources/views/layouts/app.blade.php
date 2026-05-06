@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,6 +10,7 @@
 
     @include('layouts.partials.styles')
 </head>
+
 <body class="bg-light d-flex flex-column min-vh-100">
     @include('layouts.partials.nav-main')
 
@@ -30,7 +32,9 @@
     @include('layouts.partials.footer')
     @include('layouts.partials.auth-modal')
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.3/dist/cdn.min.js"></script>
     <script>
@@ -51,8 +55,25 @@
                     }
                 });
             });
+
+            @if ($errors->any() && old('_auth_tab'))
+                const authModalEl = document.getElementById('authModal');
+                if (authModalEl) {
+                    const authModal = new bootstrap.Modal(authModalEl);
+                    authModal.show();
+
+                    const tabSelector = old('_auth_tab') === 'register' ? '#register-tab' : '#login-tab';
+                    const tabTriggerEl = document.querySelector(`[data-bs-target="${tabSelector}"]`);
+
+                    if (tabTriggerEl) {
+                        const tab = new bootstrap.Tab(tabTriggerEl);
+                        tab.show();
+                    }
+                }
+            @endif
         });
     </script>
     @stack('scripts')
 </body>
+
 </html>

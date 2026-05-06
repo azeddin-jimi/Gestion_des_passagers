@@ -34,7 +34,7 @@ class RegisteredUserController extends Controller
             'first_name' => ['nullable', 'string', 'max:120'],
             'last_name' => ['nullable', 'string', 'max:120'],
             'name' => ['nullable', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'whatsapp' => ['nullable', 'string', 'max:30'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
@@ -61,6 +61,7 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        // Redirect to home page after successful registration
         return redirect(route('home', absolute: false));
     }
 }

@@ -46,6 +46,23 @@
                 });
             });
 
+            // Re-open auth modal on validation/login/register errors after redirect
+            @if ($errors->any() && old('_auth_tab'))
+                const authModalEl = document.getElementById('authModal');
+                if (authModalEl) {
+                    const authModal = new bootstrap.Modal(authModalEl);
+                    authModal.show();
+
+                    const tabSelector = old('_auth_tab') === 'register' ? '#register-tab' : '#login-tab';
+                    const tabTriggerEl = document.querySelector(`[data-bs-target="${tabSelector}"]`);
+
+                    if (tabTriggerEl) {
+                        const tab = new bootstrap.Tab(tabTriggerEl);
+                        tab.show();
+                    }
+                }
+            @endif
+
             // Smooth scrolling for footer links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
