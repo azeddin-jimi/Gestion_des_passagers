@@ -6,16 +6,31 @@
     <div class="py-5">
         <div class="row justify-content-center">
             <div class="col-lg-8">
+
                 <h1 class="mb-4">{{ __('Blog') }}</h1>
-                <p class="lead text-muted">
-                    {{ __('Restez informé des dernières actualités, conseils de voyage et annonces marKoub.') }}</p>
+
+                <p class="text-muted">
+                    {{ __('Actualités et conseils liés au transport et aux réservations.') }}
+                </p>
+
                 <section class="mt-4">
+
                     <article class="border rounded shadow-sm p-4 mb-3">
-                        <h2 class="h5">{{ __('Conseils pour voyager malin') }}</h2>
-                        <p class="text-muted small">
-                            {{ __('Découvrez comment optimiser vos réservations et vos déplacements.') }}</p>
+                        <h2 class="h6 mb-1">{{ __('Conseils pour voyager malin') }}</h2>
+                        <p class="text-muted small mb-0">
+                            {{ __('Réserver au bon moment et comparer les trajets.') }}
+                        </p>
                     </article>
+
+                    <article class="border rounded shadow-sm p-4 mb-3">
+                        <h2 class="h6 mb-1">{{ __('Nouveaux trajets disponibles') }}</h2>
+                        <p class="text-muted small mb-0">
+                            {{ __('Découvrez les nouvelles destinations ajoutées.') }}
+                        </p>
+                    </article>
+
                 </section>
+
             </div>
         </div>
     </div>

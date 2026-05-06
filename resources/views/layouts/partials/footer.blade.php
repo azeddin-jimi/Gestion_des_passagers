@@ -7,9 +7,7 @@
                     <li><a href="{{ route('pages.villes') }}">{{ __('Villes') }}</a></li>
                     <li><a href="{{ route('pages.partenaires') }}">{{ __('Partenaires') }}</a></li>
                     <li><a href="{{ route('pages.parrainage') }}">{{ __('Programme de parrainage') }}</a></li>
-                    <li><a href="{{ route('pages.offres') }}">{{ __('Offres') }}</a></li>
-                    <li><a href="{{ route('pages.mkhyer') }}">{{ __('M\'Khyer') }}</a></li>
-                    <li><a href="{{ route('pages.paiement-en-especes') }}">{{ __('Paiement en espèces') }}</a></li>
+                    <li><a href="{{ route('pages.offres') }}">{{ __('Offres') }}</a></li>                    <li><a href="{{ route('pages.paiement-en-especes') }}">{{ __('Paiement en espèces') }}</a></li>
                 </ul>
             </div>
 
@@ -70,9 +68,10 @@
                 {{ __('Tous droits réservés.') }}
             </p>
             <div>
-                <a href="{{ route('pages.confidentialite') }}"
-                    class="me-3 footer-legal-note">{{ __('Confidentialité') }}</a>
-                <a href="{{ route('pages.conditions') }}" class="footer-legal-note">{{ __('Conditions') }}</a>
+                <a style="color: #f8f9fa;" class="navbar-brand fw-bold d-flex align-items-center gap-2" href="{{ route('home') }}">
+            <i class="bi bi-bus-front-fill fs-4"></i>
+            <span>{{ config('app.name') }}</span>
+        </a>
             </div>
         </div>
     </div>

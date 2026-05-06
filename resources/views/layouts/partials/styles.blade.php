@@ -37,6 +37,31 @@
         --bs-btn-active-border-color: var(--markoub-ink);
     }
 
+    .btn-primary,
+    .btn-outline-primary {
+        color: #fff !important;
+        background-color: var(--markoub-teal) !important;
+        border-color: var(--markoub-teal) !important;
+    }
+
+    .btn-primary:hover,
+    .btn-outline-primary:hover,
+    .btn-primary:focus,
+    .btn-outline-primary:focus {
+        background-color: var(--markoub-teal-dark) !important;
+        border-color: var(--markoub-teal-dark) !important;
+        color: #fff !important;
+    }
+
+    .bg-markoub {
+        background-color: var(--markoub-teal) !important;
+    }
+
+    .bg-markoub:hover,
+    .bg-markoub:focus {
+        background-color: var(--markoub-teal-dark) !important;
+    }
+
     .text-markoub {
         color: var(--markoub-teal-dark) !important;
     }

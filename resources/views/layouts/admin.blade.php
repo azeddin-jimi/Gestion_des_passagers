@@ -21,19 +21,19 @@
                     </a>
                 </div>
                 <nav class="nav flex-column p-2 gap-1">
-                    <a class="nav-link rounded {{ request()->routeIs('admin.dashboard') ? 'active bg-primary text-white' : 'text-dark' }}"
+                    <a class="nav-link rounded {{ request()->routeIs('admin.dashboard') ? 'active bg-markoub text-white' : 'text-dark' }}"
                         href="{{ route('admin.dashboard') }}">
                         <i class="bi bi-grid-1x2 me-2"></i>{{ __('Tableau de bord') }}
                     </a>
-                    <a class="nav-link rounded {{ request()->routeIs('admin.trajets.*') ? 'active bg-primary text-white' : 'text-dark' }}"
+                    <a class="nav-link rounded {{ request()->routeIs('admin.trajets.*') ? 'active bg-markoub text-white' : 'text-dark' }}"
                         href="{{ route('admin.trajets.index') }}">
                         <i class="bi bi-map me-2"></i>{{ __('Trajets') }}
                     </a>
-                    <a class="nav-link rounded {{ request()->routeIs('admin.users.*') ? 'active bg-primary text-white' : 'text-dark' }}"
+                    <a class="nav-link rounded {{ request()->routeIs('admin.users.*') ? 'active bg-markoub text-white' : 'text-dark' }}"
                         href="{{ route('admin.users.index') }}">
                         <i class="bi bi-people me-2"></i>{{ __('Utilisateurs') }}
                     </a>
-                    <a class="nav-link rounded {{ request()->routeIs('admin.reservations.*') ? 'active bg-primary text-white' : 'text-dark' }}"
+                    <a class="nav-link rounded {{ request()->routeIs('admin.reservations.*') ? 'active bg-markoub text-white' : 'text-dark' }}"
                         href="{{ route('admin.reservations.index') }}">
                         <i class="bi bi-ticket-perforated me-2"></i>{{ __('Réservations') }}
                     </a>
