@@ -107,7 +107,7 @@ class ReservationController extends Controller
         abort_if($reservation->user_id !== auth()->id(), 403);
 
         return view('reservations.success', [
-            'reservation' => $reservation->load('trajet'),
+            'reservation' => $reservation->load(['trajet', 'payment']),
         ]);
     }
 }

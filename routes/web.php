@@ -48,6 +48,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/reservations/{reservation}/payment', [PaymentController::class, 'show'])->name('payments.show');
     Route::post('/reservations/{reservation}/payment', [PaymentController::class, 'process'])->name('payments.process');
     Route::get('/payments/{payment}/success', [PaymentController::class, 'success'])->name('payments.success');
+    Route::get('/payments/{payment}/invoice', [PaymentController::class, 'invoice'])->name('payments.invoice');
     Route::get('/payments/{payment}/failed', [PaymentController::class, 'failed'])->name('payments.failed');
 });
 

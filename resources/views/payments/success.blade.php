@@ -8,7 +8,7 @@
     <div class="row justify-content-center">
         <div class="col-lg-6">
 
-            <div class="card shadow-sm border-0 rounded-4 text-center p-4">
+            <div class="card shadow-sm border-0 rounded-4 text-center p-4 fade-in-up" data-aos="fade-up">
 
                 <!-- ICON -->
                 <div class="mb-3">
@@ -34,7 +34,7 @@
 
                     <div class="d-flex justify-content-between mb-2">
                         <span class="text-muted">Montant</span>
-                        <strong>{{ number_format($payment->amount ?? 0,2) }} MAD</strong>
+                        <strong>{{ number_format($payment->amount ?? 0, 2) }} MAD</strong>
                     </div>
 
                     <div class="d-flex justify-content-between">
@@ -54,16 +54,18 @@
                 </div>
 
                 <!-- BUTTONS -->
-                <div class="d-flex gap-2 justify-content-center">
+                <div class="d-flex flex-column flex-md-row gap-2 justify-content-center">
+                    <a href="{{ route('payments.invoice', $payment) }}" class="btn btn-success btn-animated">
+                        <i class="bi bi-download me-2"></i>Télécharger la facture (PDF)
+                    </a>
 
-                    <a href="{{ route('reservations.mine') }}" class="btn btn-primary">
+                    <a href="{{ route('reservations.mine') }}" class="btn btn-primary btn-animated">
                         Voir mes réservations
                     </a>
 
-                    <a href="{{ route('home') }}" class="btn btn-outline-secondary">
+                    <a href="{{ route('home') }}" class="btn btn-outline-secondary btn-animated">
                         Accueil
                     </a>
-
                 </div>
 
             </div>
@@ -71,5 +73,3 @@
         </div>
     </div>
 </div>
-</div>
-

@@ -13,7 +13,7 @@
 <body class="bg-light d-flex flex-column min-vh-100">
     @include('layouts.partials.nav-main')
 
-    <main class="flex-grow-1 py-4">
+    <main class="flex-grow-1" style="padding-top: 80px; padding-bottom: 1.5rem;">
         <div class="container">
             @include('layouts.partials.flash')
             @yield('content')

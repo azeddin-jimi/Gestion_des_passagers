@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark navbar-markoub shadow-sm sticky-top">
+<nav class="navbar navbar-expand-lg navbar-dark navbar-markoub shadow-sm fixed-top">
     <div class="container">
         <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="{{ route('home') }}">
             <i class="bi bi-bus-front-fill fs-4"></i>
@@ -64,7 +64,9 @@
                                 </a>
                             </li>
 
-                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
 
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">

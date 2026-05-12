@@ -25,6 +25,12 @@
                 </div>
 
                 <div class="d-flex justify-content-center gap-2 flex-wrap">
+                    @if($reservation->payment)
+                        <a href="{{ route('payments.invoice', $reservation->payment) }}" class="btn btn-success btn-animated">
+                            <i class="bi bi-download me-2"></i>{{ __('Télécharger la facture') }}
+                        </a>
+                    @endif
+
                     <a href="{{ route('reservations.mine') }}"
                         class="btn btn-markoub btn-animated">{{ __('Voir mes reservations') }}</a>
                     <a href="{{ route('home') }}" class="btn btn-outline-secondary">{{ __('Retour a l\'accueil') }}</a>

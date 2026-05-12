@@ -7,6 +7,8 @@ use App\Models\Reservation;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use PDF;
+
 
 class PaymentController extends Controller
 {
@@ -81,6 +83,20 @@ class PaymentController extends Controller
         return view('payments.success', [
             'payment' => $payment->load('reservation.trajet'),
         ]);
+    }
+
+    public function invoice(Payment $payment)
+    {
+        if ($payment->reservation->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $payment->load('reservation.trajet');
+
+        $pdf = PDF::loadView('payments.invoice', compact('payment'));
+        $fileName = 'facture-' . $payment->transaction_id . '.pdf';
+
+        return $pdf->download($fileName);
     }
 
     public function failed(Payment $payment): View
